@@ -2,9 +2,12 @@ import { NextResponse } from "next/server";
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3001";
 
-export async function GET(req: Request) {
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const id = req.url.split("/").pop();
+    const { id } = await params;
     const url = `${BACKEND_URL}/meals/${id}`;
 
     const response = await fetch(url, {
