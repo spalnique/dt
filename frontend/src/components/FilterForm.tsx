@@ -9,7 +9,7 @@ export default function FilterForm() {
 
   const [currFilterValue] = Array.from(searchParams.values());
 
-  const handleFilterSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -23,13 +23,13 @@ export default function FilterForm() {
     router.push(url);
   };
 
-  const handleResetFilter = () => {
+  const handleReset = () => {
     router.push("/");
   };
 
   return (
     <div className="mb-8 p-4 bg-gray-50 rounded-lg">
-      <form onSubmit={handleFilterSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex gap-4">
           <input
             type="text"
@@ -46,7 +46,7 @@ export default function FilterForm() {
           </button>
           <button
             type="reset"
-            onClick={handleResetFilter}
+            onClick={handleReset}
             className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
           >
             Clear
@@ -54,6 +54,7 @@ export default function FilterForm() {
         </div>
 
         <div className="flex flex-wrap gap-4 items-center mx-auto w-fit">
+          <span className="text-gray-500">Filter by:</span>
           <label className="flex items-center gap-2">
             <input
               type="radio"
