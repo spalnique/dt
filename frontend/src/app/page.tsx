@@ -17,8 +17,10 @@ export default function HomePage({ searchParams }: HomePageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <FilterForm />
-      <PageTitle />
+      <Suspense>
+        <FilterForm />
+        <PageTitle />
+      </Suspense>
       <Suspense fallback={<Loading label="Loading meals..." />}>
         <MealList mealsPromise={meals} />
       </Suspense>

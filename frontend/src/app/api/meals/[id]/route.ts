@@ -1,13 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3001";
 
-export async function GET(
-  _req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: Request) {
   try {
-    const url = `${BACKEND_URL}/meals/${params.id}`;
+    const id = req.url.split("/").pop();
+    const url = `${BACKEND_URL}/meals/${id}`;
 
     const response = await fetch(url, {
       headers: {
