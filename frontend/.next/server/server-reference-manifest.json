@@ -1,0 +1,38 @@
+{
+  "node": {
+    "4003845c71b963efd1cf3df06d28ca51ccf853c630": {
+      "workers": {
+        "app/meal/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/meal/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/app/actions/meals.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        },
+        "app/page": {
+          "moduleId": "[project]/.next-internal/server/app/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/app/actions/meals.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/meal/[id]/page": "rsc",
+        "app/page": "rsc"
+      }
+    },
+    "4059fb9117529851f9f88586d607530226df474225": {
+      "workers": {
+        "app/meal/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/meal/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/app/actions/meals.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        },
+        "app/page": {
+          "moduleId": "[project]/.next-internal/server/app/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/app/actions/meals.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/meal/[id]/page": "rsc",
+        "app/page": "rsc"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "sef8lvvQ0+ppfxyrpv+z7+8JMOCpT4gvBwePATE/kQ4="
+}
