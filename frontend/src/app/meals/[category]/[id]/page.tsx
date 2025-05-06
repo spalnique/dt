@@ -1,5 +1,5 @@
 type AlternativeMealPageProps = {
-  params: Promise<{ category: string; id: string }>;
+  params: Promise<{ id: string; category: string }>;
 };
 
 export default async function AlternativeMealPage({
