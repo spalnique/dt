@@ -12,17 +12,15 @@ type HomePageProps = {
   searchParams: Promise<SearchParams>;
 };
 
-export default function HomePage({ searchParams }: HomePageProps) {
-  const meals = getMeals(searchParams);
+export default async function HomePage({ searchParams }: HomePageProps) {
+  const meals = await getMeals(searchParams);
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Suspense>
-        <FilterForm />
-        <PageTitle />
-      </Suspense>
+      <FilterForm />
+      <PageTitle />
       <Suspense fallback={<Loading label="Loading meals..." />}>
-        <MealList mealsPromise={meals} />
+        <MealList meals={meals} />
       </Suspense>
     </div>
   );

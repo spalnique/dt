@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { Meal } from "@/types";
 
-interface SidebarMealsProps {
+type SidebarMealsProps = {
   category: string;
   similarMeals: Meal[];
-}
+};
 
 export default function SidebarMeals({
   category,
   similarMeals,
 }: SidebarMealsProps) {
   return (
-    <div className="lg:w-1/3">
+    <div className="lg:w-1/3 animate-fade-in">
       <div className="bg-gray-50 p-6 rounded-lg">
         <h2 className="text-xl font-semibold mb-4">Other {category} Meals</h2>
         <ul className="space-y-2">

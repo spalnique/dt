@@ -1,29 +1,30 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+
 import { FormEventHandler } from "react";
 
 export default function FilterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [currFilterValue] = Array.from(searchParams.values());
+  const [[prevCriteria, prevValue] = []] = Array.from(searchParams.entries());
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const filterValue = formData.get("filterValue");
+    const value = formData.get("filterValue");
+    const criteria = formData.get("filterType") || "name";
 
-    if (!filterValue) return;
-    const filterType = formData.get("filterType");
+    if (value === prevValue && criteria === prevCriteria) return;
 
-    const url = `/?${filterType || "name"}=${filterValue}`;
+    const url = value ? `/?${criteria}=${value}` : "/";
 
     router.push(url);
   };
 
-  const handleReset = () => {
+  const handleClear = () => {
     router.push("/");
   };
 
@@ -34,7 +35,7 @@ export default function FilterForm() {
           <input
             type="text"
             name="filterValue"
-            defaultValue={currFilterValue}
+            defaultValue={prevValue}
             placeholder="Search meals..."
             className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -46,14 +47,17 @@ export default function FilterForm() {
           </button>
           <button
             type="reset"
-            onClick={handleReset}
+            onClick={handleClear}
             className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
           >
             Clear
           </button>
         </div>
 
-        <div className="flex flex-wrap gap-4 items-center mx-auto w-fit">
+        <div
+          key={searchParams.toString()}
+          className="flex flex-wrap gap-4 items-center mx-auto w-fit"
+        >
           <span className="text-gray-500">Filter by:</span>
           <label className="flex items-center gap-2">
             <input
@@ -61,7 +65,7 @@ export default function FilterForm() {
               name="filterType"
               value="category"
               className="form-radio"
-              defaultChecked={!!searchParams.get("category")}
+              defaultChecked={prevCriteria === "category"}
             />
             Category
           </label>
@@ -71,7 +75,7 @@ export default function FilterForm() {
               name="filterType"
               value="country"
               className="form-radio"
-              defaultChecked={!!searchParams.get("country")}
+              defaultChecked={prevCriteria === "country"}
             />
             Country
           </label>
@@ -81,7 +85,7 @@ export default function FilterForm() {
               name="filterType"
               value="ingredient"
               className="form-radio"
-              defaultChecked={!!searchParams.get("ingredient")}
+              defaultChecked={prevCriteria === "ingredient"}
             />
             Ingredient
           </label>

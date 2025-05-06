@@ -1,24 +1,12 @@
-"use client";
-
 import { Meal } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
 
 type MealDetailsProps = { meal: Meal };
 
 export default function MealDetails({ meal }: MealDetailsProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (ref.current) ref.current.style.opacity = "1";
-  }, [meal]);
-
   return (
-    <div
-      ref={ref}
-      className="flex flex-col md:flex-row gap-8 mb-8 opacity-0 transition-opacity duration-700"
-    >
+    <div className="flex flex-col md:flex-row gap-8 mb-8 animate-fade-in">
       <Image
         src={meal.strMealThumb}
         alt={meal.strMeal}

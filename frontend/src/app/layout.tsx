@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className + " flex flex-col h-screen"}>
         <header className="bg-white shadow-sm">
           <nav className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
@@ -33,7 +33,7 @@ export default function RootLayout({
             </div>
           </nav>
         </header>
-        <main>{children}</main>
+        <main className="grow">{children}</main>
       </body>
     </html>
   );

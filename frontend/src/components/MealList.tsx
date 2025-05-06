@@ -1,34 +1,20 @@
-"use client";
-
-import { useEffect, useRef, use } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 import { Meal } from "@/types";
 
 type MealListProps = {
-  mealsPromise: Promise<Meal[]>;
+  meals: Meal[] | null;
 };
 
-export default function MealList({ mealsPromise }: MealListProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const meals = use(mealsPromise);
-
-  useEffect(() => {
-    if (meals && ref.current) ref.current.style.opacity = "1";
-  }, [meals]);
-
+export default function MealList({ meals }: MealListProps) {
   return meals ? (
-    <div
-      ref={ref}
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 opacity-0 transition-opacity duration-700"
-    >
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {meals.map((meal) => (
         <Link
           href={`/meal/${meal.idMeal}`}
           key={meal.idMeal}
-          className="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+          className="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow animate-fade-in"
         >
           <Image
             src={meal.strMealThumb}

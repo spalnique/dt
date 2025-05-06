@@ -19,13 +19,12 @@ export default async function MealPage({ params }: MealPageProps) {
   const category = meal.strCategory;
 
   const ingredients = Object.keys(meal)
-    .filter((key) => key.startsWith("strIngredient"))
+    .filter((key) => key.startsWith("strIngredient") && meal[key as keyof Meal])
     .map((key, i) => {
-      const ingredient = meal[key as keyof Meal];
-      const measure = meal[`strMeasure${i + 1}` as keyof Meal];
+      const ingredient = meal[key as keyof Meal].trim();
+      const measure = meal[`strMeasure${i + 1}` as keyof Meal].trim();
       return { ingredient, measure };
-    })
-    .filter((item) => item.ingredient && item.ingredient.trim());
+    });
 
   return (
     <div className="container mx-auto px-4 py-8">

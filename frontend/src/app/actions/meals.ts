@@ -7,7 +7,7 @@ const nextUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/meals`;
 
 export async function getMeals(
   searchParams: Promise<SearchParams>
-): Promise<Meal[]> {
+): Promise<Meal[] | null> {
   const queryString = new URLSearchParams(
     (await searchParams) as Record<string, string>
   );
