@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import { SearchParams } from "next/dist/server/request/search-params";
 
 import FilterForm from "@/components/FilterForm";
 import MealList from "@/components/MealList";
@@ -9,11 +8,12 @@ import Loading from "@/components/Loading";
 import { getMeals } from "./actions/meals";
 
 type HomePageProps = {
-  searchParams: Promise<SearchParams>;
+  searchParams: Promise<Record<string, string>>;
 };
 
 export default async function HomePage({ searchParams }: HomePageProps) {
-  const meals = await getMeals(searchParams);
+  const query = await searchParams;
+  const meals = await getMeals(query);
 
   return (
     <div className="container mx-auto px-4 py-8">

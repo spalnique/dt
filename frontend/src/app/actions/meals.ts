@@ -1,20 +1,15 @@
 "use server";
 
 import { Meal } from "@/types";
-import { SearchParams } from "next/dist/server/request/search-params";
 
-const nextUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/meals`;
+const apiBaseURL = `${process.env.NEXT_PUBLIC_APP_URL}/api/meals`;
 
 export async function getMeals(
-  searchParams: Promise<SearchParams>
+  searchParams?: Record<string, string>
 ): Promise<Meal[] | null> {
-  const queryString = new URLSearchParams(
-    (await searchParams) as Record<string, string>
-  );
+  const url = `${apiBaseURL}?${new URLSearchParams(searchParams)}`;
 
-  const response = await fetch(`${nextUrl}?${queryString}`, {
-    cache: "no-store",
-  });
+  const response = await fetch(url, { cache: "no-store" });
 
   if (!response.ok) {
     throw new Error(
@@ -25,17 +20,8 @@ export async function getMeals(
   return response.json();
 }
 
-export async function getMealWithSimilar(
-  params: Promise<{ id: string }>
-): Promise<{
-  meal: Meal;
-  similarMeals: Meal[];
-}> {
-  const { id } = await params;
-
-  const response = await fetch(`${nextUrl}/${id}`, {
-    cache: "no-store",
-  });
+export async function getMealById(id: string): Promise<Meal> {
+  const response = await fetch(`${apiBaseURL}/${id}`);
 
   if (!response.ok) {
     throw new Error(
@@ -43,26 +29,21 @@ export async function getMealWithSimilar(
     );
   }
 
-  const meal = await response.json();
+  return response.json();
+}
 
-  const similarResponse = await fetch(
-    `${nextUrl}?category=${meal.strCategory}`,
-    {
-      cache: "no-store",
-    }
-  );
+export async function getCategoryMeals(category: string): Promise<Meal[]> {
+  const response = await fetch(`${apiBaseURL}?category=${category}`, {
+    next: {
+      revalidate: 120,
+    },
+  });
 
-  if (!similarResponse.ok) {
+  if (!response.ok) {
     throw new Error(
-      `Failed to fetch similar meals: ${similarResponse.status} ${similarResponse.statusText}`
+      `Failed to fetch category meals: ${response.status} ${response.statusText}`
     );
   }
 
-  const similarMeals = await similarResponse.json();
-
-  const filteredSimilarMeals = similarMeals.filter(
-    (similarMeal: Meal) => similarMeal.idMeal !== meal.idMeal
-  );
-
-  return { meal, similarMeals: filteredSimilarMeals };
+  return response.json();
 }

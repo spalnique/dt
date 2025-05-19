@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import { Meal } from "@/types";
 
-import { getMealWithSimilar } from "@/app/actions/meals";
+import { getCategoryMeals, getMealById, getMeals } from "@/app/actions/meals";
 
 import MealIngredients from "@/components/MealIngredients";
 import SidebarMeals from "@/components/SidebarMeals";
@@ -13,10 +13,17 @@ type MealPageProps = {
   params: Promise<{ id: string }>;
 };
 
-export default async function MealPage({ params }: MealPageProps) {
-  const { meal, similarMeals } = await getMealWithSimilar(params);
+export async function generateStaticParams() {
+  const meals = (await getMeals()) ?? [];
+  return meals.map(({ idMeal }) => ({ id: idMeal }));
+}
 
-  const category = meal.strCategory;
+export default async function MealPage({ params }: MealPageProps) {
+  const { id } = await params;
+  const meal = await getMealById(id);
+
+  const category = meal.strCategory.toLowerCase();
+  const categoryMeals = await getCategoryMeals(category);
 
   const ingredients = Object.keys(meal)
     .filter((key) => key.startsWith("strIngredient") && meal[key as keyof Meal])
@@ -37,7 +44,7 @@ export default async function MealPage({ params }: MealPageProps) {
         </div>
 
         <Suspense fallback={<Loading label="Loading similar meals..." />}>
-          <SidebarMeals category={category} similarMeals={similarMeals} />
+          <SidebarMeals category={category} meals={categoryMeals} />
         </Suspense>
       </div>
     </div>
