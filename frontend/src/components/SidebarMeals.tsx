@@ -1,12 +1,22 @@
+"use client";
+
+import { use } from "react";
 import Link from "next/link";
+
 import { Meal } from "@/types";
 
 type SidebarMealsProps = {
-  category: string;
-  meals: Meal[];
+  categoryPromise: Promise<string>;
+  categoryMealsPromise: Promise<Meal[]>;
 };
 
-export default function SidebarMeals({ category, meals }: SidebarMealsProps) {
+export default function SidebarMeals({
+  categoryPromise,
+  categoryMealsPromise,
+}: SidebarMealsProps) {
+  const category = use(categoryPromise);
+  const meals = use(categoryMealsPromise);
+
   return (
     <div className="lg:w-1/3 animate-fade-in">
       <div className="bg-gray-50 p-6 rounded-lg">

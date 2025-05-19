@@ -1,13 +1,18 @@
+"use client";
+
+import { use } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 import { Meal } from "@/types";
 
 type MealListProps = {
-  meals: Meal[] | null;
+  mealsPromise: Promise<Meal[] | null>;
 };
 
-export default function MealList({ meals }: MealListProps) {
+export default function MealList({ mealsPromise }: MealListProps) {
+  const meals = use(mealsPromise);
+
   return meals ? (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {meals.map((meal) => (

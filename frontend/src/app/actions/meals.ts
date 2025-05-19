@@ -9,7 +9,7 @@ export async function getMeals(
 ): Promise<Meal[] | null> {
   const url = `${apiBaseURL}?${new URLSearchParams(searchParams)}`;
 
-  const response = await fetch(url, { cache: "no-store" });
+  const response = await fetch(url, { next: { revalidate: 120 } });
 
   if (!response.ok) {
     throw new Error(
@@ -29,7 +29,7 @@ export async function getMealById(id: string): Promise<Meal> {
     );
   }
 
-  return response.json();
+  return await response.json();
 }
 
 export async function getCategoryMeals(category: string): Promise<Meal[]> {
@@ -45,5 +45,5 @@ export async function getCategoryMeals(category: string): Promise<Meal[]> {
     );
   }
 
-  return response.json();
+  return await response.json();
 }
