@@ -18,6 +18,7 @@ export default function MealDetails({ mealPromise }: MealDetailsProps) {
     .map((key, i) => {
       const ingredient = meal[key as keyof Meal].trim();
       const measure = meal[`strMeasure${i + 1}` as keyof Meal].trim();
+
       return { ingredient, measure };
     });
 
@@ -35,7 +36,7 @@ export default function MealDetails({ mealPromise }: MealDetailsProps) {
         <div className="md:w-1/2">
           <h1 className="text-3xl font-bold mb-4">{meal.strMeal}</h1>
           <Link
-            href={`/?country=${meal.strArea}`}
+            href={`/?country=${meal.strArea.toLowerCase()}`}
             className="text-white mb-4 inline-block bg-gray-400 hover:bg-gray-600 transition-all duration-250 rounded-lg px-2 py-1"
           >
             {meal.strArea}

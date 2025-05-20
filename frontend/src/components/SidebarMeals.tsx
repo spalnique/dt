@@ -20,7 +20,9 @@ export default function SidebarMeals({
   return (
     <div className="lg:w-1/3 animate-fade-in">
       <div className="bg-gray-50 p-6 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">Other {category} Meals</h2>
+        <h2 className="text-xl font-semibold mb-4">
+          Other &quot;{category.toLowerCase()}&quot; meals
+        </h2>
         <ul className="space-y-2">
           {meals.map((meal) => (
             <li key={meal.idMeal}>

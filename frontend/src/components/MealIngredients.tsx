@@ -12,7 +12,7 @@ export default function MealIngredients({ ingredients }: MealIngredientsProps) {
         {ingredients.map((item, index) => (
           <Link
             key={index}
-            href={`/?ingredient=${item.ingredient}`}
+            href={`/?ingredient=${item.ingredient.toLowerCase()}`}
             className="flex items-center gap-2 p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
           >
             <span className="font-medium first-letter:uppercase">

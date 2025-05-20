@@ -12,16 +12,17 @@ type MealPageProps = {
 
 export default async function MealPage({ params }: MealPageProps) {
   const { id } = await params;
-  const meal = getMealById(id);
-  const category = meal.then((data) => data.strCategory.toLowerCase());
-  const categoryMeals = getCategoryMeals(await category);
+
+  const mealPromise = getMealById(id);
+  const categoryPromise = mealPromise.then((meal) => meal.strCategory);
+  const categoryMealsPromise = getCategoryMeals(await categoryPromise);
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="lg:w-2/3">
           <Suspense fallback={<Loading message="Loading recipe..." />}>
-            <MealDetails mealPromise={meal} />
+            <MealDetails mealPromise={mealPromise} />
           </Suspense>
         </div>
 
@@ -31,8 +32,8 @@ export default async function MealPage({ params }: MealPageProps) {
           }
         >
           <SidebarMeals
-            categoryPromise={category}
-            categoryMealsPromise={categoryMeals}
+            categoryPromise={categoryPromise}
+            categoryMealsPromise={categoryMealsPromise}
           />
         </Suspense>
       </div>
