@@ -29,5 +29,3 @@ The frontend application will start on port 3000.
 ## Development
 
 Both applications can be run simultaneously. The frontend will communicate with the backend through the configured API endpoints.
-
-upd
